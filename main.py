@@ -9,11 +9,15 @@ from wtforms.validators import DataRequired
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegisterForm, LoginForm
+import os
+from dotenv import load_dotenv
 import requests
+
+load_dotenv()
 
 MOVIE_API_INFO_URL = "https://api.themoviedb.org/3/movie"
 MOVIE_API_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
-MOVIE_API_KEY = "5ef830d39421aa3304c12231c423a05d"
+MOVIE_API_KEY = '5ef830d39421aa3304c12231c423a05d'
 MOVIE_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
 TV_API_INFO_URL = "https://api.themoviedb.org/3/tv"
