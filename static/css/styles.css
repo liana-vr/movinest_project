@@ -1,0 +1,314 @@
+*, *:before, *:after {
+	 box-sizing: border-box;
+}
+ html {
+	 font-size: 18px;
+	 line-height: 1.5;
+	 font-weight: 300;
+	 text-color: #83888f;
+	 font-family: 'Quicksand', sans-serif;
+}
+body {
+	 margin: 0;
+	 padding: 0;
+	 height: 100%;
+	 background: url(/static/img/gradienta.jpg);
+	 background-size: cover;
+	 position: relative;
+	 background-attachment: fixed;
+	 font-family: 'Quicksand', sans-serif;
+	 text-color: #83888f;
+	 z-index: 0;
+}
+.large {
+     font-size: 3rem;
+}
+ .content {
+	 display: flex;
+	 margin: 0 auto;
+	 text-align: center;
+	 justify-content: center;
+	 align-items: center;
+	 flex-wrap: wrap;
+	 max-width: 1500px;
+}
+ p.overview {
+	 font-size: 12px;
+	 height: 200px;
+	 width: 100%;
+	 overflow: hidden;
+	 text-overflow: ellipsis;
+}
+ .heading {
+	 width: 100%;
+	 margin-center: 1rem;
+	 margin-top: 80px;
+	 text-align: center;
+	 font-family: 'Quicksand', sans-serif;
+	 font-weight: 900;
+	 font-size: 2.5rem;
+	 text-transform: uppercase;
+	 letter-spacing: 0.1ch;
+	 line-height: 1;
+	 padding-bottom: 0.5em;
+	 margin-bottom: 1rem;
+	 position: relative;
+	 overflow: hidden;
+	 text-color: #83888f;
+}
+ a {
+    color: #83888f;
+ }
+ a:hover{
+    color: pink;
+ }
+ a:visit{
+    color: #83888f;
+ }
+ #main a{
+ 	margin: 200px;
+    color: #83888f;
+    overflow: hidden;
+ }
+ .description {
+	 width: 100%;
+	 text-align: center;
+	 margin-top: 0;
+	 margin-left: 0rem;
+	 margin-bottom: 3rem;
+}
+ .card {
+	 color: inherit;
+	 cursor: pointer;
+	 width: calc(25% - 3rem);
+	 min-width: calc(25% - 3rem);
+	 height: 400px;
+	 min-height: 400px;
+	 perspective: 1000px;
+	 margin: 1rem auto;
+	 position: relative;
+
+}
+ @media screen and (max-width: 800px) {
+	 .card {
+		 width: calc(100% - 3rem);
+	}
+}
+ @media screen and (max-width: 500px) {
+	 .card {
+		 width: 100%;
+	}
+}
+@media screen and (max-width: 550px) {
+	 .card {
+		 width: 80%;
+	}
+}
+
+ @media screen and (max-width: 1024px) {
+	 .card {
+		 width: 30%;
+	}
+}
+
+ @media screen and (max-width: 768px) {
+	 .card {
+		 width: 40%;
+	}
+}
+ @media screen and (max-width: 380px) {
+	 .card {
+		 width: 80%;
+	}
+}
+
+ @media screen and (max-width: 415px) {
+	 .card {
+		 width: 70%;
+	}
+}
+ .front, .back {
+	 display: flex;
+	 border-radius: 6px;
+	 background-position: center;
+	 background-size: cover;
+	 text-align: center;
+	 font-family: 'Quicksand', sans-serif;
+	 justify-content: center;
+	 align-items: center;
+	 position: absolute;
+	 height: 100%;
+	 width: 100%;
+	 -webkit-backface-visibility: hidden;
+	 backface-visibility: hidden;
+	 transform-style: preserve-3d;
+	 transition: ease-in-out 600ms;
+}
+ .front {
+	 background-size: cover;
+	 padding: 2rem;
+	 font-size: 1.618rem;
+	 font-weight: 600;
+	 color: white;
+     text-shadow: 0 0 3px black, 0 0 3px black;
+}
+ .front:before {
+	 position: absolute;
+	 display: block;
+	 content: '';
+	 top: 0;
+	 left: 0;
+	 right: 0;
+	 bottom: 0;
+	 background: linear-gradient(135deg, #1a9be6, #1a57e6);
+	 opacity: 0.25;
+	 z-index: -1;
+}
+ .card:hover .front {
+	 transform: rotateY(180deg);
+}
+ .card:nth-child(even):hover .front {
+	 transform: rotateY(-180deg);
+}
+ .back {
+	 background: #fff;
+	 transform: rotateY(-180deg);
+	 padding: 0 2em;
+}
+ .card:hover .back {
+	 transform: rotateY(0deg);
+}
+ .card:nth-child(even) .back {
+	 transform: rotateY(180deg);
+}
+ .card:nth-child(even):hover .back {
+	 transform: rotateY(0deg);
+}
+.btn-primary {
+    margin: 10px;
+    width:150px;
+    height:50px;
+    text-align:center;
+    font-size:1.1em;
+    font-family: 'Quicksand', sans-serif;
+    color: #fff;
+    background-color: black;
+    border-color: black;
+    border-radius: 1rem;
+    opacity: 0.6;
+}
+.btn-secondary{
+    margin: 10px;
+    width:150px;
+    height:50px;
+    text-align:center;
+    font-size:1.1em;
+    font-family: 'Quicksand', sans-serif;
+    border-radius: 1rem;
+    opacity: 0.6;
+}
+.btn-primary:hover {
+    background-color: pink;
+    border-color: pink;
+}
+.btn-secondary:hover{
+    background-color: PaleVioletRed;
+    border-color: PaleVioletRed;
+}
+ .btn-sm{
+     width:65px;
+     height:25px;
+     margin: 5px;
+     padding: .10rem;
+     font-size: .600rem;
+     font-weight: bold;
+     border-radius: .60rem;
+ }
+.container.add {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+.rating {
+    color: PaleVioletRed;
+}
+.review {
+    font-style: italic;
+}
+ .movie_gens {
+	 font-size: 11.5px;
+}
+ .title {
+	 font-weight: bold;
+}
+ .release_date {
+	 font-weight: normal;
+}
+ .navbar{
+     position: fixed;
+     top: 0;
+     width: 100%;
+     z-index: 9999;
+     overflow: hidden;
+     opacity: 60%;
+     -webkit-backdrop-filter: blur(260px);
+     backdrop-filter: blur(260px);
+     font-family: 'Quicksand', sans-serif;
+ }
+ .navbar-light .navbar-nav .nav-link:hover {
+    color: pink;
+ }
+ .navbar-light .navbar-brand:hover {
+    color: PaleVioletRed;
+ }
+ .container {
+    text-align: center;
+    text-color: #83888f;
+ }
+ #login{
+    width: 400px;
+ }
+
+ #user{
+    float: center;
+    width: 400px;
+    z-index: 2;
+    margin: 130px 0px 0px 20px;
+    position: absolute;
+ }
+ .user{
+    text-align: left;
+    text-color: #83888f;
+ }
+  .profile_pic {
+    width: 500px;
+    margin: 130px 0px 0px 20px;
+    height: 500px;
+    opacity: 0.6;
+    border-radius: 50%;
+    float: center;
+    position: absolute;
+    z-index: 1;
+ }
+ .heading_main {
+    text-align: center;
+    margin-top: 200px;
+    width: 100%;
+    font-weight: 900;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1ch;
+    position: relative;
+    overflow: hidden;
+    text-color: #83888f;
+    text-de
+    font-family: 'Quicksand', sans-serif;
+    text-decoration: none;
+ }
+ #name{
+    text-align: left;
+    text-color: #83888f;
+ }
+ .welcome{
+    margin-top: 200px;
+    font-family: 'Quicksand', sans-serif;
+ }
