@@ -9,12 +9,13 @@ from wtforms.validators import DataRequired
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegisterForm, LoginForm
+import os
 import requests
 
 
 MOVIE_API_INFO_URL = "https://api.themoviedb.org/3/movie"
 MOVIE_API_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
-MOVIE_API_KEY = '5ef830d39421aa3304c12231c423a05d'
+MOVIE_API_KEY = os.environ.get('MOVIE_API_KEY')
 MOVIE_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
 TV_API_INFO_URL = "https://api.themoviedb.org/3/tv"
@@ -23,8 +24,8 @@ TV_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
 app = Flask(__name__)
 Bootstrap(app)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movinest.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
