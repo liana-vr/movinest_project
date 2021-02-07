@@ -19,7 +19,6 @@ itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
 requests==2.25.1
-pip==20.3.3
 psycopg2-binary==2.8.6
 python-dotenv==0.15.0
 setuptools==51.3.3
