@@ -493,7 +493,6 @@ def find_show():
         data = response.json()
         new_show = TVShow(
             title=data["name"],
-            year=data["first_air_date"],
             img_url=f"{TV_IMG_URL}{data['poster_path']}",
             description=data["overview"],
             user=current_user
