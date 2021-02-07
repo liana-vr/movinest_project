@@ -2,6 +2,7 @@ import random
 from flask import Flask, render_template, redirect, url_for, request, flash, abort
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects.postgresql import psycopg2
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -22,9 +23,12 @@ TV_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
 app = Flask(__name__)
 Bootstrap(app)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movinest.db'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+DATABASE_URL = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
