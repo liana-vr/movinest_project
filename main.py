@@ -71,7 +71,7 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(1500), nullable=False)
     rating = db.Column(db.Float, nullable=True)
     ranking = db.Column(db.Integer, nullable=True)
     review = db.Column(db.String(250), nullable=True)
@@ -85,7 +85,7 @@ class MovieWishlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(1500), nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
     friend = db.Column(db.String(250), nullable=False)
     friend_id = db.Column(db.Integer)
@@ -98,7 +98,7 @@ class ShowWishlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(1500), nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
     friend = db.Column(db.String(250), nullable=False)
     friend_id = db.Column(db.Integer)
@@ -111,7 +111,7 @@ class TVShow(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     year = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(1500), nullable=False)
     rating = db.Column(db.Float, nullable=True)
     ranking = db.Column(db.Integer, nullable=True)
     review = db.Column(db.String(250), nullable=True)
@@ -120,7 +120,7 @@ class TVShow(db.Model):
     user = relationship("User", back_populates="show")
 
 
-# db.create_all()
+db.create_all()
 
 
 @login_manager.user_loader
@@ -475,6 +475,7 @@ def find_movie():
             title=data["title"],
             year=data["release_date"].split("-")[0],
             img_url=f"{MOVIE_IMG_URL}{data['poster_path']}",
+            description=data["overview"],
             user=current_user
         )
         db.session.add(new_movie)
@@ -493,6 +494,7 @@ def find_show():
         new_show = TVShow(
             title=data["name"],
             img_url=f"{TV_IMG_URL}{data['poster_path']}",
+            description=data["overview"],
             user=current_user
         )
         db.session.add(new_show)
@@ -624,7 +626,7 @@ def about():
     return render_template("about.html")
 
 
-# add_pics_to_db()
+add_pics_to_db()
 
 
 if __name__ == '__main__':
