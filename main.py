@@ -626,7 +626,8 @@ def delete_account():
 def about():
     return render_template("about.html")
 
-# add_pics_to_db()
+
+add_pics_to_db()
 
 
 if __name__ == '__main__':
