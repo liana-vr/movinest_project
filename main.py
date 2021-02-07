@@ -120,7 +120,7 @@ class TVShow(db.Model):
     user = relationship("User", back_populates="show")
 
 
-db.create_all()
+# db.create_all()
 
 
 @login_manager.user_loader
@@ -475,7 +475,6 @@ def find_movie():
             title=data["title"],
             year=data["release_date"].split("-")[0],
             img_url=f"{MOVIE_IMG_URL}{data['poster_path']}",
-            description=data["overview"],
             user=current_user
         )
         db.session.add(new_movie)
@@ -494,7 +493,6 @@ def find_show():
         new_show = TVShow(
             title=data["name"],
             img_url=f"{TV_IMG_URL}{data['poster_path']}",
-            description=data["overview"],
             user=current_user
         )
         db.session.add(new_show)
