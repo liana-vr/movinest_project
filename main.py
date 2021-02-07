@@ -110,8 +110,6 @@ class TVShow(db.Model):
     __tablename__ = "show"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
-    year = db.Column(db.Integer, nullable=False)
-    description = db.Column(db.String(1500), nullable=False)
     rating = db.Column(db.Float, nullable=True)
     ranking = db.Column(db.Integer, nullable=True)
     review = db.Column(db.String(250), nullable=True)
@@ -494,7 +492,6 @@ def find_show():
         new_show = TVShow(
             title=data["name"],
             img_url=f"{TV_IMG_URL}{data['poster_path']}",
-            description=data["overview"],
             user=current_user
         )
         db.session.add(new_show)
