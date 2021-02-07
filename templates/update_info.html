@@ -1,0 +1,29 @@
+{% extends "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+<div class="container" id="all_friends_page">
+    <div class="movinest" id="movinest_circ">
+        <div class="movinest_circle"></div>
+    </div>
+    <div class="container">
+        <h1 style="color: white;" class="welcome"></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    {% for field, errors in form.errors.items() %}
+                    {{ '/n '.join(errors) }}
+                    {% endfor %}
+                    {{ wtf.quick_form(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
+{% endblock %}

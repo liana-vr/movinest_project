@@ -1,0 +1,21 @@
+{% extends "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Add TV Show{% endblock %}
+
+{% block content %}
+<div class="container" id="all_friends_page">
+    <div class="movinest" id="movinest_circ">
+        <div class="movinest_circle_friend"></div>
+    </div>
+    <div class="content" id="edit_container">
+        <h1 style="color: white;" class="heading-all">Are you sure you want to delete your account?</h1>
+        <div class="container" id="delete_buttons">
+                <a href="{{ url_for('delete_account') }}" class="btn btn-primary btn-block btn-large" id="small_yes">Yes</a>
+                <a href="{{ url_for('user_home') }}" class="btn btn-secondary btn-block btn-large" id="small_no">No</a>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
+
+{% endblock %}

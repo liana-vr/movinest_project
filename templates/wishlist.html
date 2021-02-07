@@ -1,0 +1,71 @@
+{% extends "header.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+<div class="container" id="all_friends_page">
+    <div class="movinest" id="movinest_circ">
+            <div class="movinest_circle_friend"></div>
+    </div>
+    <div class="container" id="search_all_my_content">
+        <div class="container">
+            <h1 style="color: white;" class="heading-all" id="movies_tw">Movies to watch</h1>
+            <div class="friend-container">
+                <div class="friend-wrapper no-scrollbar">
+                    {% for movie in movies %}
+                    <div class="small-card">
+                        <div class="front" style="background-image: url('{{movie.img_url}}');"></div>
+                        <div class="back">
+                            <div>
+                                <div class="title">{{movie.title}} <br> <span
+                                        class="release_date">({{movie.year}})</span>
+                                </div>
+                                <div class="rating">
+                                    <p>{{movie.friend}}</p>
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <p class="review">{{movie.description}}</p>
+                                <a href="{{url_for('movie_wishlist_remove', movie_id=movie.id)}}"
+                                   class="btn btn-primary btn-sm">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1 style="color: white;" class="heading-all" id="shows_tw">Shows to watch</h1>
+            <div class="friend-container">
+                <div class="friend-wrapper no-scrollbar">
+                    {% for show in shows %}
+                    <div class="small-card">
+                        <div class="front" style="background-image: url('{{show.img_url}}');"></div>
+                        <div class="back">
+                            <div>
+                                <div class="title">{{show.title}} <br> <span class="release_date">({{show.year}})</span>
+                                </div>
+                                <div class="rating">
+                                    <p>{{show.friend}}</p>
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <p class="review">{{show.description}}</p>
+                                <a href="{{url_for('show_wishlist_remove', show_id=show.id)}}"
+                                   class="btn btn-primary btn-sm">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
+{% endblock %}

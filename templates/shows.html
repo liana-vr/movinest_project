@@ -1,39 +1,42 @@
 {% extends "header.html" %}
 
-{% block title %}My Top 10 Shows{% endblock %}
+{% block title %}My Top Shows{% endblock %}
 
 {% block content %}
-
-<div class="container">
-    <h1 style="color:#83888f;" class="heading">My Top 10 Shows</h1>
-    {% for show in shows %}
-    <div class="card">
-        <div class="front" style="background-image: url('{{show.img_url}}');">
-            <p class="large">{{ show.ranking }}</p>
+<div class="container" id="all_friends_big_cards">
+    <div class="movinest" id="movinest_circ">
+        <div class="movinest_circle_friend"></div>
+    </div>
+    <div class="container" id="search_all_my_content">
+        <div class="container text-center add">
+            <a href="{{ url_for('add_show') }}" class="btn btn-primary btn-block btn-large">Add Show</a>
         </div>
-        <div class="back">
-            <div>
-                <div class="title">{{show.title}} <span class="release_date">({{show.year}})</span></div>
-                <div class="rating">
-                    <label>{{show.rating}}</label>
-                    <i class="fas fa-heart"></i>
+        {% for show in shows %}
+        <div class="card">
+            <div class="front" style="background-image: url('{{show.img_url}}');">
+                <p class="large" id="circle">{{ show.ranking }}</p>
+            </div>
+            <div class="back">
+                <div>
+                    <div class="title">{{show.title}} <br> <span class="release_date">({{show.year}})</span></div>
+                    <div class="rating">
+                        <label>{{show.rating}}</label>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <p class="review">{{show.review}}</p>
+                    <a href="{{ url_for('rate_show', id=show.id) }}" class="btn btn-primary btn-sm">Update</a>
+                    <a href="{{ url_for('delete_show', id=show.id) }}" class="btn btn-secondary btn-sm">Delete</a>
+
                 </div>
-                <p class="review">"{{show.review}}"</p>
-<!--                <p class="overview">{{show.description}}</p>-->
-
-                <a href="{{ url_for('rate_show', id=show.id) }}" class="btn btn-primary btn-sm">Update</a>
-                <a href="{{ url_for('delete_show', id=show.id) }}" class="btn btn-secondary btn-sm">Delete</a>
-
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
-<div class="container text-center add">
-    <a href="{{ url_for('add_show') }}" class="btn btn-primary btn-block btn-large">Add Show</a>
-</div>
+{% include "footer.html" %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
+
 {% endblock %}

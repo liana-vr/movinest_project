@@ -1,0 +1,39 @@
+{% extends "header.html" %}
+
+{% block title %}Search For Friend{% endblock %}
+
+{% block content %}
+<div class="container" id="all_friends_page">
+    <div class="movinest" id="movinest_circ">
+        <div class="movinest_circle"></div>
+    </div>
+    {% if not no_results: %}
+    <div class="profiles-wrapper" id="search_all_friends">
+        {% for user in results %}
+        <div class="mini-stack-container">
+            <div class="container" id="mini-name">
+                <a href="{{ url_for('user_profile', selected_user=user.id) }}" class="btn mini_square">{{user.firstname}}
+                    {{user.lastname}}</a>
+            </div>
+            <div class="container" id="line">
+                <hr class="line">
+            </div>
+            <div class="container" id="mini-pic">
+                <a href="{{ url_for('user_profile', selected_user=user.id) }}"><img src="{{user.avatar_url}}"
+                                                                                    id="mini_avatar"></a>
+            </div>
+            <div class="container" id="mini-location">
+                <p id="user_location">{{user.location}}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else: %}
+    <div class="container" style="color: white; text-transform: uppercase;">
+        <h1>no one by that name</h1>
+    </div>
+    {% endif %}
+</div>
+{% include "footer.html" %}
+
+{% endblock %}

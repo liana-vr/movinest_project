@@ -4,8 +4,15 @@
 {% block title %}Add Movie{% endblock %}
 
 {% block content %}
-<div class="content">
-    <h1 style="color:#83888f;" class="heading">Add a Movie</h1>
-    {{wtf.quick_form(form, novalidate=True)}}
+<div class="container" id="all_friends_page">
+    <div class="movinest" id="movinest_circ">
+        <div class="movinest_circle"></div>
+    </div>
+    <div class="content" id="search_all_content">
+        {{wtf.quick_form(form, novalidate=True)}}
+    </div>
+
 </div>
+{% include "footer.html" %}
+
 {% endblock %}

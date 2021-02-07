@@ -1,0 +1,39 @@
+{% extends "header.html" %}
+
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+<div class="container" id="all_friends_page">
+    <div class="movinest" id="movinest_circ">
+        <div class="movinest_circle" id="profile_cirle"></div>
+    </div>
+    <div class="stack-container" id="search_all_user">
+        <div class="container" id="pic">
+            <img src="{{profile_image}}" class="profile_pic">
+        </div>
+        <div class="container" id="user">
+            <h2 style="color:white;" class="heading_main" id="user_name">{{name}}</h2>
+            <br>
+            <a href="{{ url_for('friend_movies', selected_user=user.id) }}" class="heading_main">Movies</a>
+            <br>
+            <a href="{{ url_for('friend_shows', selected_user=user.id) }}" class="heading_main">Shows</a>
+        </div>
+        {% if not added: %}
+        <div class="container_follow">
+            <a href="{{ url_for('add_to_my_friends', selected_user=user.id) }}" class="btn btn-primary btn-circle">Follow</a>
+        </div>
+        {% else: %}
+        <div class="container_follow">
+            <a href="{{ url_for('remove_friend', selected_user=user.id) }}"
+               class="btn btn-primary btn-circle">Unfollow</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% include "footer.html" %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+
+{% endblock %}

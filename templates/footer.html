@@ -1,0 +1,16 @@
+<div class="footer">
+    <div class="footer-text-left">
+        <p class="copyright text-muted">Copyright &copy; MOVINEST 2021</p>
+    </div>
+    {% if logged_in == True: %}
+    <div>
+        <a href="{{ url_for('about') }}" class="about">About</a>
+    </div>
+    {%endif%}
+</div>
+<script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{ url_for('static', filename='js/clean-blog.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>

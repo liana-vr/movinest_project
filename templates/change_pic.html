@@ -1,0 +1,24 @@
+{% extends "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Edit Avatar{% endblock %}
+
+{% block content %}
+<div class="container" id="all_friends_page">
+    <div class="movinest" id="movinest_circ">
+        <div class="movinest_circle"></div>
+    </div>
+    <div class="container" id="search_all_my_content">
+        <h1 style="color: white;" class="heading-all" id="new_avatar">Select A New Avatar</h1>
+        <div class="wrapper">
+            {% for pic in pictures %}
+            <div class="avatar_pics">
+                <a href="{{ url_for('select_pic', pic_id=pic.id) }}"><img src="{{pic.img_url}}" id="avatar_pics"></a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% include "footer.html" %}
+
+{% endblock %}
