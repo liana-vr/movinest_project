@@ -17,7 +17,7 @@
         {% for friend in friends %}
         <div class="mini-stack-container">
             <div class="container" id="mini-name">
-                <a href="{{ url_for('user_profile', selected_user=friend.friend_id) }}" class="btn mini_square">{{friend.friend_name}}</a>
+                <a href="{{ url_for('user_profile', selected_user=friend.friend_id) }}" id="mini_name_text">{{friend.friend_name}}</a>
             </div>
             <div class="container" id="line">
                 <hr class="line">
@@ -28,6 +28,7 @@
             <div class="container" id="mini-location">
                 <p id="user_location">{{friend.friend_location}}</p>
             </div>
+            <div class="mini_square"></div>
         </div>
         {% endfor %}
     </div>

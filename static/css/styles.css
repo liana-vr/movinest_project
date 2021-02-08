@@ -584,38 +584,12 @@ body {
     transition: all .6s ease-in-out;
     cursor: pointer;
  }
- .mini-stack-container:hover #mini-pic:{
-    transform: scale(1.2);
- }
- #mini-name{
-    display: flex;
-    justify-content: bottom;
-    align-items: center;
-    width: 80px;
-    height: 80px;
-    z-index: 2;
-    padding: 0;
-    font-size: 0.5rem;
-    line-height: 10px;
-    text-align: center;
-    position: absolute;
-    text-decoration: none;
-    transition: all .6s ease-in-out;
-    text-transform: uppercase;
- }
- #mini-name:hover{
-    color: #ffc30d;
- }
- #mini-pic:hover{
-    transform: scale(1.2);
- }
  #mini-pic{
     height: 80px;
     width: 80px;
     margin: auto;
     size: cover;
     padding: 0;
-    position: center;
     border-radius: 50%;
     z-index: 2;
     transition: all .6s ease-in-out;
@@ -630,83 +604,68 @@ body {
     border: 3px solid white;
     transition: all .4s ease-in-out;
  }
- .mini_square{
-    height: 120px;
-    width: 80px;
-    color: black;
-    padding-top: 50px;
-    margin-top: 115px;
-    padding-left: 1%;
-    padding-right: 1%;
-    font-size: 0.54rem;
-    text-align: center;
-    background-color: white;
-    border-color: white;
-    line-height: 10px;
-    border-radius: 0px 0px 10px 10px;
-    position: absolute;
-    z-index: 1;
-    transition: all .4s ease-in-out;
- }
-
- .mini_square_friend{
-    height: 120px;
-    width: 80px;
-    color: white;
-    padding-top: 50px;
-    margin-top: 115px;
-    font-size: 0.6rem;
-    text-align: center;
-    border-color: white;
-    background-color: none;
-    line-height: 10px;
-    border-radius: 0px 0px 10px 10px;
-    position: absolute;
-    z-index: 1;
-    transition: all .4s ease-in-out;
- }
-   .mini_square_friend:hover{
-    color: #ff009b;
- }
- #line{
-    width: 80px;
-    height: 10px;
-    margin-top: 105px;
-    padding: 0;
-    position: absolute;
-    z-index: 2;
- }
   #mini-location{
     width: 80px;
     height: 10px;
-    margin-top: 145px;
-    padding: 0;
     position: absolute;
+    padding-top: 8rem;
     z-index: 2;
     display: flex;
     justify-content: center;
     align-items: center;
  }
+ #mini-name{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    z-index: 3;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding-left: 1px;
+    padding-right: 1px;
+    transition: all .6s ease-in-out;
+    padding-top: 4.5rem;
+ }
+ #mini-name:hover{
+    color: ff009b;
+ }
+ #mini_name_text{
+    color:black;
+    position: center;
+    font-size: 0.6rem;
+    text-align: center;
+    z-index: 2;
+    width: 80px;
+ }
+ .mini_square{
+    height: 120px;
+    padding-top: 40px;
+    margin-top: 2rem;
+    width: 80px;
+    position: absolute;
+    border-radius: 0px 0px 10px 10px;
+    background-color: white;
+    z-index: 1;
+ }
  #user_location{
     font-size: 0.5rem;
     text-align: center;
     position: absolute;
+    float: center;
     text-decoration: none;
+    margin: 0;
     text-transform: uppercase;
  }
-  #user_location_friend{
-    font-size: 0.5rem;
-    text-align: center;
+  #line{
+    width: 80px;
+    height: 10px;
+    padding-top: 7.5rem;
     position: absolute;
-    text-decoration: none;
-    text-transform: uppercase;
-    color: white;
+    z-index: 2;
  }
  hr.line{
     border-bottom: 1px solid black;
- }
-  hr.line_friend{
-    border-bottom: 2px solid white;
+    margin: 0;
  }
  .welcome{
     margin-top: 70px;
@@ -803,19 +762,19 @@ body {
      font-size: 0.8rem;
  }
  .movinest_circle{
-    height: 1050px;
-    width: 1050px;
+    height: 1000px;
+    width: 1000px;
     border-radius: 50%;
     background: linear-gradient(20deg, #3d00d9, #8400ff, #ed00a8);
     position: absolute;
     z-index: 1;
  }
   .movinest_circle_friend{
-    height: 1050px;
-    width: 1050px;
+    height: 1000px;
+    width: 1000px;
     margin: 0px opx 200px -80px;
     border-radius: 50%;
-    background-image: linear-gradient(20deg, #de8aff, #9f00f4 70%);
+    background-image: linear-gradient(20deg, #c6f0ff, #3377ff 70%);
     position: fixed;
     z-index: 1;
  }
@@ -881,7 +840,6 @@ body {
     margin-top: 100px;
     margin-left: 120px;
     position: absolute;
-
     z-index: 2;
  }
   #search_all_user{
@@ -943,7 +901,6 @@ body {
     width: 100%;
     text-align: left;
     float: left;
-
     z-index: 3;
  }
  .delete{
