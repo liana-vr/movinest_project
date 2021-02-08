@@ -120,7 +120,7 @@ class TVShow(db.Model):
     user = relationship("User", back_populates="show")
 
 
-db.create_all()
+# db.create_all()
 
 
 @login_manager.user_loader
@@ -641,7 +641,7 @@ def about():
     return render_template("about.html")
 
 
-# add_pics_to_db()
+add_pics_to_db()
 
 
 if __name__ == '__main__':
