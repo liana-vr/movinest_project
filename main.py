@@ -120,7 +120,7 @@ class TVShow(db.Model):
     user = relationship("User", back_populates="show")
 
 
-# db.create_all()
+db.create_all()
 
 
 @login_manager.user_loader
