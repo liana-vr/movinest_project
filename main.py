@@ -111,7 +111,6 @@ class TVShow(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     rating = db.Column(db.Float, nullable=True)
-    year = db.Column(db.Integer, nullable=False)
     ranking = db.Column(db.Integer, nullable=True)
     review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False)
@@ -197,15 +196,20 @@ def user_home():
                            profile_image=my_avatar, user=current_user.id)
 
 
-path = "./static/img/avatars/*.png"
-files = glob.glob(path)
+# path = "./static/img/avatars/*.png"
+# files = glob.glob(path)
 
 
 def add_pics_to_db():
-    for image in files:
-        new_avatar = Avatar(
-            img_url=image,
-        )
+    for i in range(1, 81):
+        if i < 10:
+            new_avatar = Avatar(
+                img_url=f"./static/img/avatars/avatar_0{i}.png",
+            )
+        else:
+            new_avatar = Avatar(
+                img_url=f"./static/img/avatars/avatar_{i}.png",
+            )
         db.session.add(new_avatar)
         db.session.commit()
 
@@ -492,7 +496,6 @@ def find_show():
         data = response.json()
         new_show = TVShow(
             title=data["name"],
-            year=data["release_date"].split("-")[0],
             img_url=f"{TV_IMG_URL}{data['poster_path']}",
             user=current_user
         )
@@ -625,7 +628,7 @@ def about():
     return render_template("about.html")
 
 
-add_pics_to_db()
+#add_pics_to_db()
 
 
 if __name__ == '__main__':
