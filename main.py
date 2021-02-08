@@ -198,10 +198,6 @@ def user_home():
                            profile_image=my_avatar, user=current_user.id)
 
 
-# path = "./static/img/avatars/*.png"
-# files = glob.glob(path)
-
-
 def add_pics_to_db():
     avatar_pics_urls = []
     avatar_pics = Avatar.query.all()
@@ -641,7 +637,7 @@ def about():
     return render_template("about.html")
 
 
-add_pics_to_db()
+# add_pics_to_db()
 
 
 if __name__ == '__main__':
