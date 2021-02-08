@@ -1102,6 +1102,16 @@ body {
 	 .card {
 		 width: 70%;
 	}
+	#line{
+	    margin-top:0;
+	    height: 0px;
+	}
+	 hr.line{
+    border-bottom: 0px solid black;
+ }
+  hr.line_friend{
+    border-bottom: 0px solid white;
+ }
 	#all_friends_page{
 	    width: 60%;
 	    margin-top:20%;

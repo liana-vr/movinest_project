@@ -111,6 +111,7 @@ class TVShow(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
     rating = db.Column(db.Float, nullable=True)
+    year = db.Column(db.Integer, nullable=False)
     ranking = db.Column(db.Integer, nullable=True)
     review = db.Column(db.String(250), nullable=True)
     img_url = db.Column(db.String(250), nullable=False)
@@ -491,6 +492,7 @@ def find_show():
         data = response.json()
         new_show = TVShow(
             title=data["name"],
+            year=data["release_date"].split("-")[0],
             img_url=f"{TV_IMG_URL}{data['poster_path']}",
             user=current_user
         )
