@@ -25,6 +25,8 @@ app = Flask(__name__)
 Bootstrap(app)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+# app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///movinest.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -118,7 +120,7 @@ class TVShow(db.Model):
     user = relationship("User", back_populates="show")
 
 
-# db.create_all()
+db.create_all()
 
 
 @login_manager.user_loader
@@ -201,17 +203,28 @@ def user_home():
 
 
 def add_pics_to_db():
+    avatar_pics_urls = []
+    avatar_pics = Avatar.query.all()
+    for pic in avatar_pics:
+        url = pic.img_url
+        avatar_pics_urls.append(url)
     for i in range(1, 81):
         if i < 10:
-            new_avatar = Avatar(
-                img_url=f"./static/img/avatars/avatar_0{i}.png",
-            )
+            img_url = f"./static/img/avatars/avatar_0{i}.png"
+            if img_url not in avatar_pics_urls:
+                new_avatar = Avatar(
+                    img_url=f"./static/img/avatars/avatar_0{i}.png"
+                )
+                db.session.add(new_avatar)
+                db.session.commit()
         else:
-            new_avatar = Avatar(
-                img_url=f"./static/img/avatars/avatar_{i}.png",
-            )
-        db.session.add(new_avatar)
-        db.session.commit()
+            img_url = f"./static/img/avatars/avatar_{i}.png"
+            if img_url not in avatar_pics_urls:
+                new_avatar = Avatar(
+                    img_url=f"./static/img/avatars/avatar_{i}.png"
+                )
+                db.session.add(new_avatar)
+                db.session.commit()
 
 
 @app.route("/pics", methods=["GET", "POST"])
