@@ -99,7 +99,6 @@ class ShowWishlist(db.Model):
     __tablename__ = "show_wishlist"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(250), nullable=False)
-    year = db.Column(db.Integer, nullable=False)
     description = db.Column(db.String(1500), nullable=False)
     img_url = db.Column(db.String(250), nullable=False)
     friend = db.Column(db.String(250), nullable=False)
@@ -419,7 +418,6 @@ def show_wishlist(show_id, friend_id):
     friend_id = friend.id
     new_show_wishlist = ShowWishlist(
         title=show.title,
-        year=show.year,
         img_url=show.img_url,
         description=show_review,
         friend=friend_name,
@@ -634,8 +632,13 @@ def delete_account():
 
 @app.route('/about')
 def about():
-    return render_template("about.html")
+    return render_template("about.html", logged_in=False)
 
+
+@app.route('/about_in')
+@login_required
+def about_logged_in():
+    return render_template("about.html", logged_in=True)
 
 # add_pics_to_db()
 

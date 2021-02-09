@@ -2,11 +2,6 @@
     <div class="footer-text-left">
         <p class="copyright text-muted">&copy; MOVINEST 2021</p>
     </div>
-    {% if logged_in == True: %}
-    <div>
-        <a href="{{ url_for('about') }}" class="about">About</a>
-    </div>
-    {%endif%}
 </div>
 <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>

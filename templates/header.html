@@ -26,8 +26,10 @@
     <div class="container-fluid">
         {% if logged_in == False: %}
         <a class="navbar-brand" href="/">MOVINEST</a>
+        <a href="{{ url_for('about') }}" class="about">About</a>
         {% else %}
         <a class="navbar-brand" href="{{ url_for('user_home') }}">MOVINEST</a>
+        <a href="{{ url_for('about_logged_in') }}" class="about">About</a>
         {% endif %}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

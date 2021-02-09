@@ -15,7 +15,8 @@
         {% for user in users %}
         <div class="mini-stack-container">
             <div class="container" id="mini-name">
-                <a href="{{url_for('user_profile', selected_user=user.id)}}" id="mini_name_text">{{user.firstname}} {{user.lastname}}</a>
+                <a href="{{url_for('user_profile', selected_user=user.id)}}" id="mini_name_text">{{user.firstname}}
+                    {{user.lastname}}</a>
             </div>
             <div class="container" id="line">
                 <hr class="line">
@@ -23,12 +24,11 @@
             <div class="container" id="mini-pic">
                 <a href="{{ url_for('user_profile', selected_user=user.id) }}"><img src="{{user.avatar_url}}" id="mini_avatar"></a>
             </div>
-            </div>
             <div class="container" id="mini-location">
                 <p id="user_location">{{user.location}}</p>
             </div>
             <div href="{{ url_for('user_profile', selected_user=user.id) }}" class="mini_square"></div>
-        </div>
+            </div>
         {% endfor %}
     </div>
 </div>

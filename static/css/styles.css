@@ -432,7 +432,7 @@ body {
  .friend-container{
     display: flex;
     width: 500px;
-    height: 250px;
+    height: 215px;
     margin-left: 10px;
     margin-top: 10px;
     overflow-x: auto;
@@ -750,7 +750,6 @@ body {
    font-size: 0.9rem;
  }
  #logout_button{
-     background: transparent;
    }
   #movies_tw, #shows_tw{
         margin-left: 7%;
@@ -1660,9 +1659,9 @@ body {
   color: white;
 }
 .about{
-      font-size:15px;
+      font-size:1rem;
+      margin-top: 5px;
       float: right;
-      margin-right: 40px;
 }
 @viewport {
   width: device-width ;
