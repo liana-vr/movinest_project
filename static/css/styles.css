@@ -591,7 +591,7 @@ body {
     size: cover;
     padding: 0;
     border-radius: 50%;
-    z-index: 3;
+    z-index: 4;
     transition: all .6s ease-in-out;
     position: absolute;
  }
@@ -602,6 +602,7 @@ body {
     position: center;
     border-radius: 50%;
     border: 3px solid white;
+    z-index: 4;
     transition: all .4s ease-in-out;
  }
   #mini-location{
@@ -609,7 +610,7 @@ body {
     height: 10px;
     position: absolute;
     padding-top: 8rem;
-    z-index: 2;
+    z-index: 3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -623,6 +624,7 @@ body {
     text-transform: uppercase;
     padding-left: 1px;
     padding-right: 1px;
+    z-index: 4;
     transition: all .6s ease-in-out;
     padding-top: 4.5rem;
  }
@@ -634,7 +636,7 @@ body {
     position: center;
     font-size: 0.6rem;
     text-align: center;
-    z-index: 3;
+    z-index: 4;
     width: 80px;
  }
  .mini_square{
@@ -661,7 +663,7 @@ body {
     height: 10px;
     padding-top: 7.5rem;
     position: absolute;
-    z-index: 2;
+    z-index: 3;
  }
  hr.line{
     border-bottom: 1px solid black;
@@ -955,8 +957,8 @@ body {
         grid-gap: 7px;
     }
     .movinest_circle, .movinest_circle_friend{
-        width: 1050px;
-        height: 1050px;
+        width: 900px;
+        height: 900px;
     }
     .search_friend{
         width: 80%;
@@ -1001,6 +1003,10 @@ body {
 	    width: 80%;
 	    margin-left: 2%;
 	}
+	.movinest_circle, .movinest_circle_friend{
+        width: 900px;
+        height: 900px;
+    }
 	.movie_search_wrapper{
         grid-template-columns: repeat(4, 120px);
         margin-left: -6.5%;
@@ -1077,6 +1083,10 @@ body {
 	#edit-page{
 	    width: 300px;
 	}
+	.movinest_circle, .movinest_circle_friend{
+        width: 800px;
+        height: 800px;
+    }
     #search_all_content{
         margin-left: 40%;
     }
@@ -1187,6 +1197,10 @@ body {
      #select_movie_text{
         margin-left: 32%;
     }
+    .movinest_circle, .movinest_circle_friend{
+        width: 800px;
+        height: 800px;
+    }
     .profiles-wrapper{
         margin-left: 11%;
         max-width: 80%;
@@ -1227,6 +1241,10 @@ body {
 @media screen and (max-width: 414px){
     #change_password{
         margin-left: 32%;
+    }
+    .movinest_circle, .movinest_circle_friend{
+        width: 800px;
+        height: 800px;
     }
     .profiles-wrapper{
         margin-left: 11%;
@@ -1320,8 +1338,8 @@ body {
         margin-top: 180%;
     }
      .movinest_circle, .movinest_circle_friend{
-        width: 800px;
-        height: 800px;
+        width: 700px;
+        height: 700px;
     }
     #movinest_circ{
         margin-top: -70%;
@@ -1441,8 +1459,8 @@ body {
      font-size: 0.9rem;
     }
     .movinest_circle, .movinest_circle_friend{
-        width: 800px;
-        height: 800px;
+        width: 700px;
+        height: 700px;
     }
     #movinest_circ{
         margin-top: -90%;
@@ -1592,6 +1610,7 @@ body {
         margin-top: -15%;
         margin-bottom: 5%;
      }
+
      #movies_tw, #shows_tw{
         margin-top: 1%;
         font-size: 0.8rem;
