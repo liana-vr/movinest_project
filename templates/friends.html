@@ -28,7 +28,7 @@
             <div class="container" id="mini-location">
                 <p id="user_location">{{friend.friend_location}}</p>
             </div>
-            <div class="mini_square"></div>
+            <div href="{{ url_for('user_profile', selected_user=user.id) }}" class="mini_square"></div>
         </div>
         {% endfor %}
     </div>
