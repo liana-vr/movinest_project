@@ -19,7 +19,7 @@
                 <hr class="line">
             </div>
             <div class="container" id="mini-pic">
-                <a href="{{ url_for('user_profile', selected_user=friend.friend_id) }}"><img src="{{friend.friend_avatar_url}}" id="mini_avatar"></a>
+                <a href="{{ url_for('user_profile', selected_user=user.id) }}"><img src="{{friend.friend_avatar_url}}" id="mini_avatar"></a>
             </div>
             <div class="container" id="mini-location">
                 <p id="user_location">{{user.location}}</p>
