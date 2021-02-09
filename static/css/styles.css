@@ -806,7 +806,7 @@ body {
  }
   #movinest_button{
     z-index: 2;
-    margin-top: 350px;
+    padding-top: 270px;
     margin-left: -10px;
     position: absolute;
  }
@@ -941,6 +941,9 @@ body {
   @media screen and (max-width: 800px) {
       #change_password{
         margin-left: 5%;
+    }
+       #movinest_button{
+        padding-top: 300px
     }
 	 .card {
 		 width: calc(50% - 3rem);
@@ -1133,8 +1136,8 @@ body {
     .logo{
        font-size: 3rem;
     }
-    #movinest_button{
-        margin-top: 200%
+   #movinest_button{
+        padding-top: 300px
     }
     #movinest_intro{
         margin-top: 15%
@@ -1260,7 +1263,7 @@ body {
         margin-left: 32%;
     }
     #movinest_button{
-        margin-top: 170%;
+        padding-top: 300px
     }
         #movinest_circ{
         margin-top: -115%;
@@ -1336,9 +1339,6 @@ body {
     }
     .intro{
         width: 130%;
-    }
-      #movinest_button{
-        margin-top: 180%;
     }
     #movinest_circ{
         margin-top: -70%;
@@ -1451,9 +1451,6 @@ body {
     .logo{
        font-size: 3rem;
        margin-left: -1%;
-    }
-    #movinest_button{
-        margin-top: 150%
     }
     #movinest_intro{
         margin-top: 15%
@@ -1569,9 +1566,6 @@ body {
 	}
     .logo{
        font-size: 2.5rem;
-    }
-    #movinest_button{
-        margin-top: 170%
     }
     #movinest_intro{
         margin-top: 15%
