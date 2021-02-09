@@ -147,14 +147,14 @@ def register():
             method='pbkdf2:sha256',
             salt_length=8
         )
-        rand_avatar = Avatar.query.filter_by(id=random.choice(range(1, 80))).first()
+        avatar = Avatar.query.filter_by(id=84).first()
         new_user = User(
             email=form.email.data,
             firstname=form.firstname.data.title(),
             lastname=form.lastname.data.title(),
             location=form.location.data.title(),
             password=hash_and_salted_password,
-            avatar_url=rand_avatar.img_url
+            avatar_url=avatar.img_url
         )
         db.session.add(new_user)
         db.session.commit()
