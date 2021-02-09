@@ -44,7 +44,7 @@ class FindMovieForm(FlaskForm):
 
 
 class RateMovieForm(FlaskForm):
-    rating = StringField("Your Rating Out of 10 e.g. 7.5", [validators.DataRequired()])
+    rating = StringField("Rating Out of 10 e.g. 7.5", [validators.DataRequired()])
     review = StringField("Write A Short Review")
     submit = SubmitField("Done")
 
