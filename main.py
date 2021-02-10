@@ -1,4 +1,3 @@
-import random
 from flask import Flask, render_template, redirect, url_for, request, flash, abort
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
@@ -8,13 +7,12 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import RegistrationForm, LoginForm, FindMovieForm, RateMovieForm, FindTVShowForm, RateTVShowForm, \
     FindFriendForm, UpdateInfoForm, ChangePasswordForm
-import glob
 import os
 import requests
 
 MOVIE_API_INFO_URL = "https://api.themoviedb.org/3/movie"
 MOVIE_API_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
-MOVIE_API_KEY = '5ef830d39421aa3304c12231c423a05d'
+MOVIE_API_KEY = '5ef830d39421aa3304c12231c423a05d'  # FREE API KEY
 MOVIE_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
 TV_API_INFO_URL = "https://api.themoviedb.org/3/tv"
@@ -23,6 +21,8 @@ TV_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
 app = Flask(__name__)
 Bootstrap(app)
+
+
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -32,6 +32,8 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
+# //////////// DATABASE TABLES //////////////////////
 
 class User(UserMixin, db.Model):
     __tablename__ = "user"
@@ -120,18 +122,21 @@ class TVShow(db.Model):
 db.create_all()
 
 
+# //////////// USER REGISTRATION AND LOGIN //////////////////////
+
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-@app.route("/")
+@app.route("/")                                         # LANDING PAGE
 def home():
     return render_template("index.html", logged_in=False)
 
 
 @app.route('/registration', methods=["GET", "POST"])
-def register():
+def register():                                         # USER REGISTRATION AND PASSWORD ENCRYPTION
     form = RegistrationForm()
     if form.validate_on_submit():
 
@@ -142,7 +147,7 @@ def register():
 
         hash_and_salted_password = generate_password_hash(
             form.password.data,
-            method='pbkdf2:sha256',
+            method='pbkdf2:sha256',                      # PASSWORD ENCRYPTION
             salt_length=8
         )
         avatar = Avatar.query.filter_by(id=84).first()
@@ -162,7 +167,7 @@ def register():
 
 
 @app.route('/login', methods=["GET", "POST"])
-def login():
+def login():                                               # USER LOGIN
     form = LoginForm()
     if form.validate_on_submit():
         email = form.email.data
@@ -180,9 +185,12 @@ def login():
     return render_template("login.html", form=form, logged_in=False)
 
 
+# //////////// CURRENT USER HOME PAGE //////////////////////
+
+
 @app.route("/user")
 @login_required
-def user_home():
+def user_home():                                          # DISPLAY CURRENT USER HOME PAGE
     name = current_user.firstname
     user = User.query.get(current_user.id)
     users_with_pic = user.avatar_url
@@ -195,41 +203,16 @@ def user_home():
                            profile_image=my_avatar, user=current_user.id)
 
 
-def add_pics_to_db():
-    avatar_pics_urls = []
-    avatar_pics = Avatar.query.all()
-    for pic in avatar_pics:
-        url = pic.img_url
-        avatar_pics_urls.append(url)
-    for i in range(1, 81):
-        if i < 10:
-            img_url = f"./static/img/avatars/avatar_0{i}.png"
-            if img_url not in avatar_pics_urls:
-                new_avatar = Avatar(
-                    img_url=f"./static/img/avatars/avatar_0{i}.png"
-                )
-                db.session.add(new_avatar)
-                db.session.commit()
-        else:
-            img_url = f"./static/img/avatars/avatar_{i}.png"
-            if img_url not in avatar_pics_urls:
-                new_avatar = Avatar(
-                    img_url=f"./static/img/avatars/avatar_{i}.png"
-                )
-                db.session.add(new_avatar)
-                db.session.commit()
-
-
 @app.route("/pics", methods=["GET", "POST"])
 @login_required
-def change_pic():
+def change_pic():                                        # CURRENT USER - CHANGE AVATAR
     avatar_pics = Avatar.query.all()
     return render_template("change_pic.html", pictures=avatar_pics, logged_in=True)
 
 
 @app.route("/user/<int:pic_id>")
 @login_required
-def select_pic(pic_id):
+def select_pic(pic_id):                                  # CURRENT USER - SELECT NEW AVATAR FROM DATABASE
     avatar = Avatar.query.filter_by(id=pic_id).first()
     user = User.query.get(current_user.id)
     friend_pics = Friend.query.filter_by(friend_id=current_user.id).all()
@@ -242,7 +225,7 @@ def select_pic(pic_id):
 
 
 @app.route("/movies")
-@login_required
+@login_required                        # DISPLAY ALL MOVIES CURRENT USER HAS SELECTED FROM THE DATABASE
 def movies():
     all_movies = Movie.query.filter(Movie.user_id == current_user.id).order_by(Movie.rating).all()
     for i in range(len(all_movies)):
@@ -252,7 +235,7 @@ def movies():
 
 
 @app.route("/shows")
-@login_required
+@login_required                       # DISPLAY ALL SHOWS CURRENT USER HAS SELECTED FROM THE DATABASE
 def shows():
     all_shows = TVShow.query.filter(TVShow.user_id == current_user.id).order_by(TVShow.rating).all()
     for i in range(len(all_shows)):
@@ -262,14 +245,17 @@ def shows():
 
 
 @app.route("/friends")
-@login_required
+@login_required                       # DISPLAY ALL FRIENDS CURRENT USER IS FOLLOWING
 def friends():
     all_friends = Friend.query.filter(Friend.user_id == current_user.id).all()
     return render_template("friends.html", friends=all_friends, logged_in=True, current_user=current_user)
 
 
+# //////////// FIND, ADD AND REMOVE FRIENDS //////////////////////
+
+
 @app.route("/search_for_friend", methods=["GET", "POST"])
-@login_required
+@login_required                                            # SEARCH THE DATABASE FOR SPECIFIC USER NAMES
 def search_friend():
     all_users = User.query.filter(User.id != current_user.id).order_by(User.lastname).all()
     form = FindFriendForm()
@@ -294,7 +280,7 @@ def search_friend():
 
 @app.route('/<int:selected_user>', methods=["GET", "POST"])
 @login_required
-def user_profile(selected_user):
+def user_profile(selected_user):                          # VIEWING THE PROFILE OF ANOTHER USER
     already_added = False
     this_user = User.query.get(selected_user)
     first_name = this_user.firstname
@@ -311,7 +297,7 @@ def user_profile(selected_user):
 
 @app.route("/friend_movies/<int:selected_user>")
 @login_required
-def friend_movies(selected_user):
+def friend_movies(selected_user):                         # VIEWING ANOTHER USER'S MOVIE LIST
     this_user = User.query.get(selected_user)
     first_name = this_user.firstname
     all_movies = Movie.query.filter(Movie.user_id == selected_user).order_by(Movie.rating).all()
@@ -324,7 +310,7 @@ def friend_movies(selected_user):
 
 @app.route("/friend_shows/<int:selected_user>")
 @login_required
-def friend_shows(selected_user):
+def friend_shows(selected_user):                          # VIEWING ANOTHER USER'S SHOW LIST
     this_user = User.query.get(selected_user)
     first_name = this_user.firstname
     all_shows = TVShow.query.filter(TVShow.user_id == selected_user).order_by(TVShow.rating).all()
@@ -337,7 +323,7 @@ def friend_shows(selected_user):
 
 @app.route('/friends/<int:selected_user>')
 @login_required
-def add_to_my_friends(selected_user):
+def add_to_my_friends(selected_user):                    # ADD ANOTHER USER TO FRIEND LIST
     friend = User.query.get(selected_user)
     friend_id = friend.id
     friend_avatar = friend.avatar_url
@@ -359,7 +345,7 @@ def add_to_my_friends(selected_user):
 
 @app.route('/friend/<int:selected_user>')
 @login_required
-def remove_friend(selected_user):
+def remove_friend(selected_user):                       # REMOVE USER FROM FRIEND LIST
     this_user = User.query.get(selected_user)
     friendship = Friend.query.filter((Friend.user_id == current_user.id), (Friend.friend_id == this_user.id)).all()
     for item in friendship:
@@ -371,8 +357,11 @@ def remove_friend(selected_user):
     return redirect(url_for("friends"))
 
 
+# //////////// ADD, RENDER AND REMOVE ITEMS IN WATCHLIST //////////////////////
+
+
 @app.route("/wishlist")
-@login_required
+@login_required                                         # DISPLAY CURRENT USER'S WATCHLIST
 def wishlist():
     shows_w = ShowWishlist.query.filter(ShowWishlist.user_id == current_user.id).order_by(ShowWishlist.title).all()
     movies_w = MovieWishlist.query.filter(MovieWishlist.user_id == current_user.id).order_by(MovieWishlist.title).all()
@@ -382,7 +371,7 @@ def wishlist():
 
 @app.route("/movie_wishlist/<int:movie_id>/<int:friend_id>")
 @login_required
-def movie_wishlist(movie_id, friend_id):
+def movie_wishlist(movie_id, friend_id):                # ADD MOVIE FROM ANOTHER USER'S PROFILE TO WATCHLIST
     movie = Movie.query.get(movie_id)
     movie_review = movie.review
     if movie.review is None:
@@ -406,7 +395,7 @@ def movie_wishlist(movie_id, friend_id):
 
 @app.route("/show_wishlist/<int:show_id>/<int:friend_id>")
 @login_required
-def show_wishlist(show_id, friend_id):
+def show_wishlist(show_id, friend_id):                 # ADD SHOW FROM ANOTHER USER'S PROFILE TO WATCHLIST
     show = TVShow.query.get(show_id)
     show_review = show.review
     if show.review is None:
@@ -429,7 +418,7 @@ def show_wishlist(show_id, friend_id):
 
 @app.route("/show_wishlist/<int:show_id>")
 @login_required
-def show_wishlist_remove(show_id):
+def show_wishlist_remove(show_id):                    # REMOVE SHOW FROM WATCHLIST
     show = ShowWishlist.query.get(show_id)
     db.session.delete(show)
     db.session.commit()
@@ -438,16 +427,19 @@ def show_wishlist_remove(show_id):
 
 @app.route("/movie_wishlist/<int:movie_id>")
 @login_required
-def movie_wishlist_remove(movie_id):
+def movie_wishlist_remove(movie_id):                  # REMOVE MOVIE FROM WATCHLIST
     movie = MovieWishlist.query.get(movie_id)
     db.session.delete(movie)
     db.session.commit()
     return redirect(url_for("wishlist"))
 
 
+# //////////// FIND AND ADD SHOWS AND MOVIES TO USER PROFILE //////////////////////
+
+
 @app.route("/add_movie", methods=["GET", "POST"])
 @login_required
-def add_movie():
+def add_movie():                                      # USE MOVIE API TO SEARCH FOR MOVIE TITLES
     form = FindMovieForm()
     if form.validate_on_submit():
         movie_title = form.title.data
@@ -461,7 +453,7 @@ def add_movie():
 @app.route("/add_show", methods=["GET", "POST"])
 @login_required
 def add_show():
-    form = FindTVShowForm()
+    form = FindTVShowForm()                           # USE SHOW API TO SEARCH FOR SHOW TITLES
     if form.validate_on_submit():
         show_title = form.title.data
         response = requests.get(TV_API_SEARCH_URL, params={"api_key": MOVIE_API_KEY, "query": show_title})
@@ -474,7 +466,7 @@ def add_show():
 @app.route("/find_movie", methods=["GET", "POST"])
 @login_required
 def find_movie():
-    movie_api_id = request.args.get("id")
+    movie_api_id = request.args.get("id")             # USE MOVIE API TO ADD SELECTED TITLE TO DATABASE
     if movie_api_id:
         movie_api_url = f"{MOVIE_API_INFO_URL}/{movie_api_id}"
         response = requests.get(movie_api_url, params={"api_key": MOVIE_API_KEY, "language": "en-US"})
@@ -493,7 +485,7 @@ def find_movie():
 
 @app.route("/find_show", methods=["GET", "POST"])
 @login_required
-def find_show():
+def find_show():                                      # USE SHOW API TO ADD SELECTED TITLE TO DATABASE
     show_api_id = request.args.get("id")
     if show_api_id:
         show_api_url = f"{TV_API_INFO_URL}/{show_api_id}"
@@ -511,7 +503,7 @@ def find_show():
 
 @app.route("/edit_movies", methods=["GET", "POST"])
 @login_required
-def rate_movie():
+def rate_movie():                                   # USER'S RATING AND REVIEW IS ADDED TO MOVIE DATABASE
     form = RateMovieForm()
     movie_id = request.args.get("id")
     movie = Movie.query.get(movie_id)
@@ -525,7 +517,7 @@ def rate_movie():
 
 @app.route("/edit_show", methods=["GET", "POST"])
 @login_required
-def rate_show():
+def rate_show():                                    # USER'S RATING AND REVIEW IS ADDED TO SHOW DATABASE
     form = RateTVShowForm()
     show_id = request.args.get("id")
     show = TVShow.query.get(show_id)
@@ -537,9 +529,12 @@ def rate_show():
     return render_template("edit_show.html", show=show, form=form, logged_in=True, current_user=current_user)
 
 
+# //////////// DELETE SHOWS AND MOVIES //////////////////////
+
+
 @app.route("/delete_movie")
 @login_required
-def delete_movie():
+def delete_movie():                                  # DELETE MOVIE FROM THE DATABASE
     movie_id = request.args.get("id")
     movie = Movie.query.get(movie_id)
     db.session.delete(movie)
@@ -549,7 +544,7 @@ def delete_movie():
 
 @app.route("/delete_show")
 @login_required
-def delete_show():
+def delete_show():                                   # DELETE SHOW FROM THE DATABASE
     show_id = request.args.get("id")
     show = TVShow.query.get(show_id)
     db.session.delete(show)
@@ -557,16 +552,19 @@ def delete_show():
     return redirect(url_for("shows"))
 
 
+# //////////// ACCOUNT SETTINGS AND LOGOUT //////////////////////
+
+
 @app.route('/logout')
 @login_required
-def logout():
+def logout():                                             # LOGOUT
     logout_user()
     return redirect(url_for('home'))
 
 
 @app.route('/update_info', methods=["GET", "POST"])
 @login_required
-def update_info():
+def update_info():                                        # UPDATE USER INFORMATION
     form = UpdateInfoForm()
     user = User.query.get(current_user.id)
     first_name = user.firstname
@@ -587,10 +585,9 @@ def update_info():
 
 @app.route('/update_password', methods=["GET", "POST"])
 @login_required
-def change_password():
+def change_password():                                   # CHANGE PASSWORD
     form = ChangePasswordForm()
     user = User.query.get(current_user.id)
-
     if request.method == "POST" and form.validate():
         hash_and_salted_password = generate_password_hash(
             form.password.data,
@@ -605,18 +602,17 @@ def change_password():
 
 @app.route('/are_you_sure')
 @login_required
-def are_you_sure():
+def are_you_sure():                                    # ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?
     return render_template("are_you_sure.html")
 
 
 @app.route('/delete_account')
 @login_required
-def delete_account():
+def delete_account():                                  # DELETE ACCOUNT
     user = User.query.get(current_user.id)
     as_friends = Friend.query.filter_by(friend_id=current_user.id).all()
     as_movies = Movie.query.filter_by(user_id=current_user.id).all()
     as_shows = TVShow.query.filter_by(user_id=current_user.id).all()
-
     for item in as_friends:
         db.session.delete(item)
     for item in as_movies:
@@ -628,6 +624,9 @@ def delete_account():
     return redirect(url_for('home'))
 
 
+# //////////// ABOUT PAGES //////////////////////
+
+
 @app.route('/about')
 def about():
     return render_template("about.html", logged_in=False)
@@ -637,9 +636,6 @@ def about():
 @login_required
 def about_logged_in():
     return render_template("about.html", logged_in=True)
-
-
-# add_pics_to_db()
 
 
 if __name__ == '__main__':
