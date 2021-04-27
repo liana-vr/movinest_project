@@ -1,4 +1,4 @@
-# movinest_project
+# Movinest
 
 Movinest is a **fully responsive** web application that helps you find new, interesting movies and TV shows, through connecting with
                         people in your community rather than relying on an algorithm. As a user, you are able to **search an extensive database** thanks to **themoviedb.org API**
